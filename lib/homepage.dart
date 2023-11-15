@@ -1,3 +1,11 @@
+/**
+ * 
+ *  Serdar Ulutas
+ * 
+ *  2023-11-15
+ * 
+ */
+
 import 'package:flutter/material.dart';
 
 class FontData {
@@ -9,16 +17,24 @@ class FontData {
 }
 
 class HomePage extends StatelessWidget {
-  HomePage({Key? key}) : super(key: key);
-  var borderRadius = const BorderRadius.only(
-      topRight: Radius.circular(32), bottomRight: Radius.circular(32));
+  const HomePage({Key? key}) : super(key: key);
 
+  // Static list of local image assets
   static const assets = [
     "images/photo1.jpeg",
     "images/photo2.jpeg",
     "images/photo3.jpeg"
   ];
 
+  // Static list of network image assets
+  static const networkAssets = [
+    "https://fastly.picsum.photos/id/700/536/354.jpg?hmac=RabYeBoFcyq9_ShFdPlVLbZu-TENTj3HGjjkrx9qfyM",
+    "https://fastly.picsum.photos/id/1006/536/354.jpg?hmac=ncYtqoODg4szzI4ei4-8wZ8u255SdZVqYe_IaPMXmIE",
+    "https://fastly.picsum.photos/id/971/536/354.jpg?hmac=rLLiyrqSQCDBmhM-xi1ySjhuNp8LScAKezodnVVxUiQ"
+  ];
+
+  // Function to build a styled ListItem with optional fontStyle and fontWeight
+  // from chatGPT
   Widget _buildListItem(String title, IconData icon, String fontFamily,
       FontStyle? fontStyle, double fontSize,
       {FontWeight? fontWeight}) {
@@ -62,6 +78,7 @@ class HomePage extends StatelessWidget {
         child: ListView(
           scrollDirection: Axis.vertical,
           children: <Widget>[
+            // Horizontal scrolling list of local image assets
             SizedBox(
               height: 200, // Adjust the height as needed
               child: ListView.builder(
@@ -78,6 +95,7 @@ class HomePage extends StatelessWidget {
                 },
               ),
             ),
+            // List of styled ListItems with local fonts
             _buildListItem("BeVietnamPro MediumItalic", Icons.favorite,
                 "BeVietnamBro", FontStyle.italic, 20),
             _buildListItem("BeVietnamPro Medium", Icons.access_alarm_outlined,
@@ -95,6 +113,23 @@ class HomePage extends StatelessWidget {
                 26),
             _buildListItem("Rockwell Bold", Icons.soap, "Rockwell", null, 26,
                 fontWeight: FontWeight.bold),
+            // Horizontal scrolling list of network image assets
+            SizedBox(
+              height: 200, // Adjust the height as needed
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: assets.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(24),
+                      child: Image(image: NetworkImage(networkAssets[index])),
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
